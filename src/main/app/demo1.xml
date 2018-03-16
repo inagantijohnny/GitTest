@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns:batch="http://www.mulesoft.org/schema/mule/batch" xmlns:tracking="http://www.mulesoft.org/schema/mule/ee/tracking" xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:spring="http://www.springframework.org/schema/beans" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-current.xsd
+http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/batch http://www.mulesoft.org/schema/mule/batch/current/mule-batch.xsd
+http://www.mulesoft.org/schema/mule/ee/tracking http://www.mulesoft.org/schema/mule/ee/tracking/current/mule-tracking-ee.xsd">
+    <http:listener-config name="HTTP_Listener_Configuration" host="localhost" port="8081" basePath="/demo" doc:name="HTTP Listener Configuration"/>
+    <flow name="demo1Flow">
+        <http:listener config-ref="HTTP_Listener_Configuration" path="/welcome" doc:name="HTTP"/>
+        <set-variable variableName="name" value="#[message.inboundProperties.'http.query.params'.name]" doc:name="Variable"/>
+        <choice doc:name="Choice">
+            <when expression="#[flowVars.name=='john']">
+                <set-payload value="hello ! this is john . welcome to mule soft" doc:name="johnny"/>
+            </when>
+            <when expression="#[flowVars.name=='basha']">
+                <set-payload value="hello ! this is basha. welcome to mule soft." doc:name="basha"/>
+            </when>
+            <otherwise>
+                <set-payload value="hello ! welcome to mule soft." doc:name="general"/>
+            </otherwise>
+        </choice>
+        <logger message="#[payload]" level="INFO" doc:name="Logger"/>
+    </flow>
+</mule>
