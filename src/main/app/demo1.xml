@@ -14,7 +14,7 @@ http://www.mulesoft.org/schema/mule/ee/tracking http://www.mulesoft.org/schema/m
         <set-variable variableName="name" value="#[message.inboundProperties.'http.query.params'.name]" doc:name="Variable"/>
         <choice doc:name="Choice">
             <when expression="#[flowVars.name=='john']">
-                <set-payload value="hello ! this is john . welcome to mule soft" doc:name="johnny"/>
+                <set-payload value="hello ! this is johnny . welcome to mule soft" doc:name="johnny"/>
             </when>
             <when expression="#[flowVars.name=='basha']">
                 <set-payload value="hello ! this is basha. welcome to mule soft." doc:name="basha"/>
